@@ -1,0 +1,10 @@
+.pybuilder
+target
+venv
+
+*.pyc
+*.DS_Store
+
+data
+runs
+models
