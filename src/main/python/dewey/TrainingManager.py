@@ -2,16 +2,17 @@ import itertools
 from dewey.ModelTrainer import ModelTrainer
 
 class TrainingManager:
-    def __init__(self, model, data, loss, optimizer, total_epochs):
+    def __init__(self, model, data_spec, loss, optimizer, total_epochs):
         self.model = model
+        self.data_spec = data_spec
         self.optimizer = optimizer
         self.loss = loss
         self.total_epochs = total_epochs
 
     def train(self):
-        trainer = ModelTrainer()
+        trainer = ModelTrainer(self.data_spec)
         for model, loss, optimizer in itertools.product(self.model, self.loss, self.optimizer):
-            trainer.load_spec(model, data, loss, optimizer)
+            trainer.load_spec(model, loss, optimizer)
             trainer.train(total_epochs=self.total_epochs)
 
     @staticmethod
@@ -21,7 +22,7 @@ class TrainingManager:
         else:
             raise Exception("model must be specified")
         if hasattr(module, "data"):
-            data = module.data
+            data_spec = module.data
         else:
             raise Exception("data must be specified")
         if hasattr(module, "loss"):
@@ -36,4 +37,4 @@ class TrainingManager:
             total_epochs = module.epochs
         else:
             total_epochs = 1
-        return TrainingManager(model, loss, data, optimizer, total_epochs=total_epochs)
+        return TrainingManager(model, loss, data_spec, optimizer, total_epochs=total_epochs)

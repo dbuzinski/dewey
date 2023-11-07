@@ -9,7 +9,7 @@ use_plugin("python.coverage")
 use_plugin("python.distutils")
 
 
-name = "training-framework"
+name = "pydewey"
 default_task = ['install_dependencies', 'analyze', 'publish']
 
 

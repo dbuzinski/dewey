@@ -43,9 +43,9 @@ data_spec = DataSpecification(training_data=training_loader, validation_data=val
 model = GarmentClassifier()
 loss=torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
-training_spec = TrainingSpecification(model, loss, optimizer)
 
-trainer = ModelTrainer(training_spec, data_spec)
+trainer = ModelTrainer(data_spec)
+trainer.load_spec(model, loss, optimizer)
 trainer.add_plugin(PytorchCorePlugin())
 trainer.add_plugin(PytorchCheckpointPlugin())
 trainer.add_plugin(TrainingProgressPlugin())

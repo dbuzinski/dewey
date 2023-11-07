@@ -23,9 +23,9 @@ class ModelTrainer(TrainingOperator):
     def train(self, total_epochs=1):
         # plugin_data = PluginData.from_spec(self.training_spec)
         plugin_data = PluginData()
-        plugin_data.set("model", self.training_spec.model)
-        plugin_data.set("loss", self.training_spec.loss)
-        plugin_data.set("optimizer", self.training_spec.optimizer)
+        plugin_data.set("model", self.training_spec["model"])
+        plugin_data.set("loss", self.training_spec["loss"])
+        plugin_data.set("optimizer", self.training_spec["optimizer"])
         plugin_data.set("total_epochs", total_epochs)
         self.plugin_manager.run_on_plugins(self, "run_training", plugin_data)
 
