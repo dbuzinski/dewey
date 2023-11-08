@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-if __name__ == '__main__':
-    import importlib
-    import importlib.util
-    from dewey.TrainingManager import TrainingManager
+import importlib
+import importlib.util
+from dewey.TrainingManager import TrainingManager
 
+if __name__ == '__main__':
     spec = importlib.util.spec_from_file_location("train", "train.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)

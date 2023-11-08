@@ -2,7 +2,6 @@ from dewey.internal.PluginManager import PluginManager
 from dewey.internal.PluginData import PluginData
 from dewey.internal.TrainingOperator import TrainingOperator
 
-
 class ModelTrainer(TrainingOperator):
     def __init__(self, data_spec, device=None):
         super().__init__()
