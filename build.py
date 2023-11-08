@@ -1,5 +1,5 @@
 #   -*- coding: utf-8 -*-
-from pybuilder.core import use_plugin, init
+from pybuilder.core import Author, use_plugin, init
 
 use_plugin("python.core")
 use_plugin("python.install_dependencies")
@@ -10,8 +10,30 @@ use_plugin("python.distutils")
 
 
 name = "pydewey"
-default_task = ['install_dependencies', 'analyze', 'publish']
+summary = "Dewey — a fast reproducible training automation tool for MLOps pipelines."
+description = """Dewey — a fast reproducible training automation tool for MLOps pipelines.
 
+Dewey is a machine learning automation tool written to create consistent reproducible ways to train models 
+in a framework agnostic way. It allows providing a training specification, and the Dewey training framework
+takes care of all of the standard boilerplate code involving monitoring, metrics, setting up checkpoints, 
+remote caching and more. Please note that this tool is in early stages of development and is prone to rapid
+updates and breaking API changes.
+"""
+
+authors = [Author("David Buzinski", "davidbuzinski@gmail.com")]
+
+maintainers = [Author("David Buzinski", "davidbuzinski@gmail.com")]
+
+url = "https://github.com/dbuzinski/dewey"
+urls = {"Bug Tracker": "https://github.com/dbuzinski/dewey/issues",
+        "Source Code": "https://github.com/dbuzinski/dewey",
+        }
+license = "Apache License, Version 2.0"
+version = "0.1.0"
+
+requires_python = ">=3.11"
+
+default_task = ["analyze", "publish"]
 
 @init
 def set_properties(project):

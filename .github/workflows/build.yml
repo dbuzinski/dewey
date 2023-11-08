@@ -21,3 +21,5 @@ jobs:
         pip install -r requirements.txt
     - name: PyBuilder Action
       uses: pybuilder/build@v9
+      with:
+        pyb-args: "-E ci -v"

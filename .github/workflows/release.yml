@@ -1,0 +1,19 @@
+name: Publish
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    name: Publish to pypi
+    runs-on: ubuntu-latest
+    env:
+      TWINE_USERNAME: __token__
+      TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+    steps:
+    - name: PyBuilder Action
+      uses: pybuilder/build@v9
+      with:
+        pyb-args: "-E ci -v"
+        pyb-extra-args: "clean publish upload"
