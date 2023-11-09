@@ -36,11 +36,12 @@ class ModelTrainer(TrainingOperator):
             self.plugin_manager.run_on_plugins(self, "run_epoch", plugin_data)
 
     def run_epoch(self, plugin_data):
-        for batch_number, (batch_data, batch_labels) in enumerate(self.data_spec.training_data):
-            plugin_data.prepare_batch(batch_number, batch_data, batch_labels)
-            self.plugin_manager.run_on_plugins(self, "run_training_batch", plugin_data)
-        if plugin_data.get("validation_data_len"):
-            self.plugin_manager.run_on_plugins(self, "run_validation", plugin_data)
+        if not plugin_data.get("loaded_checkpoint"):
+            for batch_number, (batch_data, batch_labels) in enumerate(self.data_spec.training_data):
+                plugin_data.prepare_batch(batch_number, batch_data, batch_labels)
+                self.plugin_manager.run_on_plugins(self, "run_training_batch", plugin_data)
+            if plugin_data.get("validation_data_len"):
+                self.plugin_manager.run_on_plugins(self, "run_validation", plugin_data)
 
     def run_training_batch(self, plugin_data):
         self.plugin_manager.run_on_plugins(self, "run_backpropegation", plugin_data)

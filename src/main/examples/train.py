@@ -34,7 +34,7 @@ training_data = DataLoader(training_set, batch_size=4, shuffle=True)
 validation_data = DataLoader(validation_set, batch_size=4, shuffle=False)
 
 # set key vals
-epochs = 5
+epochs = 4
 model = GarmentClassifier()
 loss = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)

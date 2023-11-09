@@ -2,6 +2,7 @@ class PluginData:
     def __init__(self, use_checkpoints=True):
         self.data = dict()
         self.data["use_checkpoints"] = use_checkpoints
+        self.data["loaded_checkpoint"] = False
 
     def set(self, k, v):
         self.data[k] = v
