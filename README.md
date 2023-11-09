@@ -9,7 +9,6 @@ Create a file called `train.py`. Define your model, loss, and optimizer(s), and 
 
 Todos:
 * gpu support
-* nicer skip / checkpoint messaging
 * doc
 * test
 * tensorflow base + checkpoint plugins

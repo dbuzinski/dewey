@@ -17,15 +17,18 @@ class TrainingManager:
     def train(self):
         trainer = ModelTrainer(self.data_spec)
         trainer.add_plugin(PytorchCorePlugin())
-        trainer.add_plugin(PytorchCheckpointPlugin())
         trainer.add_plugin(TrainingProgressPlugin())
         trainer.add_plugin(TensorBoardPlugin())
+        trainer.add_plugin(PytorchCheckpointPlugin())
         for model, loss, optimizer in itertools.product(self.model, self.loss, self.optimizer):
             trainer.load_spec(model, loss, optimizer)
             trainer.train(total_epochs=self.total_epochs)
 
     @staticmethod
     def from_training_module(module):
+        def as_vec(x):
+            return x if hasattr(x, "__len__") else [x]
+
         data_spec = DataSpecification()
         if hasattr(module, "training_data"):
             data_spec.training_data = module.training_data
@@ -34,15 +37,15 @@ class TrainingManager:
         if hasattr(module, "validation_data"):
             data_spec.validation_data = module.validation_data
         if hasattr(module, "model"):
-            model = module.model
+            model = as_vec(module.model)
         else:
             raise Exception("model must be specified")
         if hasattr(module, "loss"):
-            loss = module.loss
+            loss = as_vec(module.loss)
         else:
             raise Exception("loss must be specified")
         if hasattr(module, "optimizer"):
-            optimizer = module.optimizer
+            optimizer = as_vec(module.optimizer)
         else:
             raise Exception("optimizer must be specified")
         if hasattr(module, "epochs"):
