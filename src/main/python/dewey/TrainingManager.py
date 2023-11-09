@@ -7,6 +7,7 @@ from dewey.plugins.core.TrainingProgressPlugin import TrainingProgressPlugin
 from dewey.plugins.pytorch.PytorchCorePlugin import PytorchCorePlugin
 from dewey.plugins.pytorch.PytorchCheckpointPlugin import PytorchCheckpointPlugin
 
+
 class TrainingManager:
     def __init__(self, model, loss, optimizer, data_spec, total_epochs):
         self.model = model

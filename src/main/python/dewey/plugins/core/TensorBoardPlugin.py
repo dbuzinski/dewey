@@ -12,12 +12,13 @@ class TensorBoardPlugin(ModelTrainerPlugin):
     def run_epoch(self, plugin_data):
         super().run_epoch(plugin_data)
         self.writer.add_scalars("Training vs. Validation Loss",
-                                {"Training": plugin_data.get("training_loss"), "Validation": plugin_data.get("validation_loss")},
+                                {"Training": plugin_data.get("training_loss"),
+                                 "Validation": plugin_data.get("validation_loss")},
                                 plugin_data.get("epoch_number") + 1)
         self.writer.flush()
 
     def run_backpropegation(self, plugin_data):
         super().run_backpropegation(plugin_data)
         if plugin_data.get("batch_number") % 1000 == 999:
-            t = plugin_data.get("epoch_number") * plugin_data.get("training_data_len") + plugin_data.get("batch_number") + 1
+            t = plugin_data.get("epoch_number")*plugin_data.get("training_data_len")+plugin_data.get("batch_number")+1
             self.writer.add_scalar("Loss/train", plugin_data.get("training_loss"), t)

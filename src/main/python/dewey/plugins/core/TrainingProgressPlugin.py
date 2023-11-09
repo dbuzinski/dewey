@@ -9,10 +9,13 @@ class TrainingProgressPlugin(ModelTrainerPlugin):
 
     def run_epoch(self, plugin_data):
         title = f"Epoch {plugin_data.get('epoch_number')+1}:"
-        with alive_bar(plugin_data.get("training_data_len"), title=title, dual_line=True, disable=plugin_data.get("loaded_checkpoint")) as bar:
+        disable = plugin_data.get("loaded_checkpoint")
+        with alive_bar(plugin_data.get("training_data_len"), title=title, dual_line=True, disable=disable) as bar:
             self.bar = bar
             super().run_epoch(plugin_data)
-        print(f"Training Loss: {str(plugin_data.get('training_loss'))}, Validation Loss: {str(plugin_data.get('validation_loss'))}")
+        training_loss = str(plugin_data.get('training_loss'))
+        validation_loss = str(plugin_data.get('validation_loss'))
+        print(f"Training Loss: {training_loss}, Validation Loss: {validation_loss}")
 
     def run_training_batch(self, plugin_data):
         super().run_training_batch(plugin_data)

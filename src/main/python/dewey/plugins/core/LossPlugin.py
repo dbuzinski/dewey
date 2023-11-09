@@ -1,5 +1,6 @@
 from dewey.ModelTrainerPlugin import ModelTrainerPlugin
 
+
 class LossPlugin(ModelTrainerPlugin):
     def __init__(self):
         super().__init__()

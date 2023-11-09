@@ -3,7 +3,7 @@ import torch
 
 
 class PytorchCorePlugin(ModelTrainerPlugin):
-    def __init__(self, device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')):
+    def __init__(self, device=torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')):
         super().__init__()
         self.model = None
         self.loss_fn = None

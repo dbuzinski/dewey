@@ -2,6 +2,7 @@ from dewey.ModelTrainerPlugin import ModelTrainerPlugin
 import os
 import torch
 
+
 class PytorchCheckpointPlugin(ModelTrainerPlugin):
     def __init__(self, checkpoints_dir="models", model_name="model"):
         super().__init__()

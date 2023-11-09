@@ -8,6 +8,9 @@
 Create a file called `train.py`. Define your model, loss, and optimizer(s), and Dew(ey) it up real good! 
 
 Todos:
+* actual cli (args & arg parsing)
+* separate checkpoints per iteration
+* loosen deps + check python version compatibility
 * add easy way to "opt in" to plugins
 * plugin deps?
 * tensorflow base + checkpoint plugins
@@ -16,5 +19,3 @@ Todos:
 * test
 * optimize code
 * distributed training
-* loosen deps + check python version compatibility
-* actual cli (args & arg parsing)
