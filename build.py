@@ -14,10 +14,10 @@ summary = "Dewey — a fast reproducible training automation tool for MLOps pipe
 description = """Dewey — a fast reproducible training automation tool for MLOps pipelines.
 
 Dewey is a machine learning automation tool written to create consistent reproducible ways to train models 
-in a framework agnostic way. It allows providing a training specification, and the Dewey training framework
-takes care of all of the standard boilerplate code involving monitoring, metrics, setting up checkpoints, 
-remote caching and more. Please note that this tool is in early stages of development and is prone to rapid
-updates and breaking API changes.
+in a framework agnostic way. It allows providing a training specification, and the Dewey training framework 
+takes care of all of the standard boilerplate code involving writing training loops, monitoring & metrics, 
+managing model checkpoints, and more. Please note that this tool is in early stages of development and is 
+prone to rapid updates and breaking API changes.
 """
 
 authors = [Author("David Buzinski", "davidbuzinski@gmail.com")]
@@ -31,13 +31,15 @@ urls = {"Bug Tracker": "https://github.com/dbuzinski/dewey/issues",
 license = "Apache License, Version 2.0"
 version = "0.2.0.dev"
 
-requires_python = ">=3.11"
+requires_python = ">=3.10"
 
 default_task = ["analyze", "publish"]
 
 @init
 def set_properties(project):
-    # project.set_property("flake8_break_build", True)
+    project.depends_on_requirements("requirements.txt")
+
+    project.set_property("flake8_break_build", True)
     project.set_property("flake8_verbose_output", True)
     project.set_property("flake8_include_test_sources", True)
 
