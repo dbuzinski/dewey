@@ -12,7 +12,9 @@ Install using pip:
 
 `pip install pydewey`
 
-Create a file called `train.py`. Define your model, loss, and optimizer(s), and Dew(ey) it up real good! 
+Create a file called `train.py`. Define your model, loss, and optimizer(s), and Dew(ey) it up real good!
+
+For an example, put the `train.py` file in this repo's `examples` folder in your current directory, and run the command `dwy`.
 
 ## Todos:
 * actual cli (args & arg parsing)
