@@ -1,7 +1,7 @@
 # Dewey
 Dewey is a fast reproducible training automation tool for MLOps pipelines.
 
-Dewey is a machine learning automation tool written to create consistent reproducible ways to train models in a framework agnostic way. It allows providing a training specification, and the Dewey training framework takes care of all of the standard boilerplate code involving writing training loops, monitoring & metrics, managing model checkpoints, and more. Please note that this tool is in early stages of development and is prone to rapid updates and breaking API changes.
+Dewey is a machine learning automation tool written to create consistent reproducible ways to train models in a framework agnostic way. It allows providing a training specification, and the Dewey training framework takes care of all of the standard boilerplate code involving writing training loops, monitoring & metrics, managing model checkpoints, and more.
 
 ![](https://media.giphy.com/media/129g9HK07tEtZm/giphy.gif)
 
