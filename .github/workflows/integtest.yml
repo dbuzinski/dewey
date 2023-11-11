@@ -17,7 +17,7 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: install dewey
-      run: pip install pydewey
+      run: pip install -i https://test.pypi.org/simple/ pydewey==0.3.0.dev20231111120216
     - name: run dwy
       run: |
         cd examples
