@@ -1,6 +1,7 @@
-from dewey.ModelTrainerPlugin import ModelTrainerPlugin
 from datetime import datetime
 from torch.utils.tensorboard import SummaryWriter
+
+from dewey.ModelTrainerPlugin import ModelTrainerPlugin
 
 
 class TensorBoardPlugin(ModelTrainerPlugin):
