@@ -17,10 +17,9 @@ Create a file called `train.py`. Define your model, loss, and optimizer(s), and 
 For an example, put the `train.py` file in this repo's `examples` folder in your current directory, and run the command `dwy`.
 
 ## Todos:
-* loosen deps + check python version compatibility
-* clean up model initialization logic in TrainingManager
 * add easy way to "opt in" to plugins
 * plugin deps?
+* clean up model initialization logic in TrainingManager
 * tensorflow base + checkpoint plugins
 * keras base + checkpoint plugins
 * doc
