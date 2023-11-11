@@ -6,6 +6,7 @@ on:
 jobs:
   integ:
     strategy:
+      fail-fast: false
       matrix:
         os: [windows-2022, ubuntu-22.04, macos-12]
         python-version: ['3.6', '3.7', '3.8', '3.9', '3.10', '3.11']
@@ -21,4 +22,4 @@ jobs:
     - name: run dwy
       run: |
         cd examples
-        dwy -n 1
+        dwy -e 1

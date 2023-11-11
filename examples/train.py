@@ -42,4 +42,5 @@ validation_data = DataLoader(validation_set, batch_size=4, shuffle=False)
 epochs = 3
 model = GarmentClassifier()
 loss = torch.nn.CrossEntropyLoss()
-optimizer = [torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9) for lr in [0.005, 0.001]]
+optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+# optimizer = [torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9) for lr in [0.005, 0.001]]
