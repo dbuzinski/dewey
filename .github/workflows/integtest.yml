@@ -1,0 +1,21 @@
+name: Integration Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  integ:
+    strategy:
+      matrix:
+        os: [windows-2022, ubuntu-22.04, macos-12]
+        python-version: ['3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: install dewey
+      run: pip install pydewey
+    - name: run dwy
+      run: cd examples && dwy -n 1

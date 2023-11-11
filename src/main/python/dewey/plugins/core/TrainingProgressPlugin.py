@@ -1,5 +1,6 @@
-from dewey.ModelTrainerPlugin import ModelTrainerPlugin
 from alive_progress import alive_bar
+
+from dewey.ModelTrainerPlugin import ModelTrainerPlugin
 
 
 class TrainingProgressPlugin(ModelTrainerPlugin):

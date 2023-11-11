@@ -1,5 +1,6 @@
 import copy
 import itertools
+
 from dewey.DataSpecification import DataSpecification
 from dewey.ModelTrainer import ModelTrainer
 from dewey.plugins.core.LossPlugin import LossPlugin
@@ -33,7 +34,7 @@ class TrainingManager:
                 model.load_state_dict(self.initial_state_dict)
 
     @staticmethod
-    def from_training_module(module):
+    def from_training_module(module, epochs=1):
         def as_vec(x):
             return x if hasattr(x, "__len__") else [x]
 
@@ -56,8 +57,4 @@ class TrainingManager:
             optimizer = as_vec(module.optimizer)
         else:
             raise Exception("optimizer must be specified")
-        if hasattr(module, "epochs"):
-            total_epochs = module.epochs
-        else:
-            total_epochs = 1
-        return TrainingManager(model, loss, optimizer, data_spec, total_epochs=total_epochs)
+        return TrainingManager(model, loss, optimizer, data_spec, total_epochs=epochs)
