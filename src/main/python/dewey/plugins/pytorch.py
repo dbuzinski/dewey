@@ -13,7 +13,7 @@ def run_training(plugin_data, next):
 
 def run_epoch(plugin_data, next):
     plugin_data.get("model").train()
-    plugin_data.set("running_loss", 0)
+    plugin_data.set("training_loss", 0)
     run_next_plugin(plugin_data, next)
 
 
@@ -40,10 +40,10 @@ def run_backpropegation(plugin_data, next):
 
 def run_validation(plugin_data, next):
     plugin_data.get("model").eval()
-    plugin_data.set("running_loss", 0)
+    plugin_data.set("validation_loss", 0)
     with torch.no_grad():
         run_next_plugin(plugin_data, next)
-    plugin_data.set("validation_loss", plugin_data.get("running_loss") / plugin_data.get("validation_data_len"))
+    plugin_data.set("validation_loss", plugin_data.get("validation_loss") / plugin_data.get("validation_data_len"))
 
 
 def run_validation_batch(plugin_data, next):
@@ -60,13 +60,13 @@ def run_validation_batch(plugin_data, next):
 
 
 def update_backpropegation_loss(plugin_data):
-    running_loss = plugin_data.get("running_loss")
-    plugin_data.set("running_loss", running_loss + plugin_data.get("batch_loss"))
-    if plugin_data.get("batch_number") % 1000 == 999:
-        plugin_data.set("training_loss", plugin_data.get("running_loss") / 1000)
-        plugin_data.set("running_loss", 0)
+    training_loss = plugin_data.get("training_loss")
+    batch_loss = plugin_data.get("batch_loss")
+    n = plugin_data.get("batch_number")
+    plugin_data.set("training_loss", (batch_loss + training_loss*n)/(n+1))
 
 
 def update_validation_loss(plugin_data):
-    running_loss = plugin_data.get("running_loss")
-    plugin_data.set("running_loss", running_loss + plugin_data.get("batch_loss"))
+    validation_loss = plugin_data.get("validation_loss")
+    batch_loss = plugin_data.get("batch_loss")
+    plugin_data.set("validation_loss", batch_loss + validation_loss)
