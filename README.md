@@ -18,7 +18,6 @@ For an example, put the `train.py` file in this repo's `examples` folder in your
 
 ## Todos:
 * remove `next` input var from plugin module functions
-* add tensorboard & (torch) checkpoints back
 * clean up model initialization logic in TrainingManager
 * install plugin deps on use (torch, tf, etc.)
 * plugin deps on other plugins
