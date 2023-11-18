@@ -5,6 +5,12 @@ import torch.nn.functional as F
 import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
+from dewey.core import use_plugin
+
+
+use_plugin("pytorch")
+use_plugin("training_progress")
+
 
 # Define model
 class GarmentClassifier(nn.Module):
