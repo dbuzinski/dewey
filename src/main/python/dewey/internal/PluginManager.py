@@ -1,15 +1,54 @@
+import subprocess
+import sys
+from importlib import import_module
+from inspect import getmembers, isfunction
+
+
 class PluginManager:
+    __instance = None
+    delimiter = ":"
+
+    @staticmethod
+    def get_instance():
+        if not PluginManager.__instance:
+            PluginManager()
+        return PluginManager.__instance
+
     def __init__(self):
         self.plugins = []
+        self._required_plugins = []
+        self.base_module = import_module("dewey.plugins.base")
+        PluginManager.__instance = self
 
-    def add_plugin(self, plugin):
+    def require(self, plugin_name):
+        self._required_plugins.append(plugin_name)
+
+    def install_plugins(self):
+        for plugins in self._required_plugins:
+            self.install(plugins)
+
+    def install(self, plugin_name):
+        if PluginManager.delimiter in plugin_name:
+            ind = plugin_name.index(PluginManager.delimiter)
+            package_name = plugin_name[0:ind]
+            plugin_module = plugin_name[ind+1:]
+            subprocess.call([sys.executable, '-m', 'pip3', 'install', package_name])
+        else:
+            package_name = "pydewey"
+            plugin_module = f"dewey.plugins.{plugin_name}"
+        plugin = self.load_plugin_module(plugin_module)
         self.plugins.append(plugin)
 
-    def run_on_plugins(self, base_operator, method_name, plugin_data):
-        operators = [base_operator] + self.plugins
-        operator_iter = reversed(operators)
-        for i in range(len(operators)):
-            operators[i].set_iterator(operator_iter)
-        plugin = next(operator_iter)
-        plugin_method = getattr(plugin, method_name)
-        plugin_method(plugin_data)
+    def load_plugin_module(self, plugin_module):
+        mod = import_module(plugin_module)
+        base_functions = getmembers(self.base_module, isfunction)
+        for fn_name, fn in base_functions:
+            if not hasattr(mod, fn_name):
+                setattr(mod, fn_name, fn)
+        return mod
+
+    def run_stage(self, trainer, stage, plugin_data):
+        plugin_iterator = reversed([trainer] + self.plugins)
+        plugin = next(plugin_iterator)
+        plugin_fn = getattr(plugin, stage)
+        plugin_fn(plugin_data, plugin_iterator)

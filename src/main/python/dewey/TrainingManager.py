@@ -3,11 +3,6 @@ import itertools
 
 from dewey.DataSpecification import DataSpecification
 from dewey.ModelTrainer import ModelTrainer
-from dewey.plugins.core.LossPlugin import LossPlugin
-from dewey.plugins.core.TensorBoardPlugin import TensorBoardPlugin
-from dewey.plugins.core.TrainingProgressPlugin import TrainingProgressPlugin
-from dewey.plugins.pytorch.PytorchCorePlugin import PytorchCorePlugin
-from dewey.plugins.pytorch.PytorchCheckpointPlugin import PytorchCheckpointPlugin
 
 
 class TrainingManager:
@@ -21,11 +16,6 @@ class TrainingManager:
 
     def train(self):
         trainer = ModelTrainer(self.data_spec)
-        trainer.add_plugin(PytorchCorePlugin())
-        trainer.add_plugin(LossPlugin())
-        trainer.add_plugin(TrainingProgressPlugin())
-        trainer.add_plugin(TensorBoardPlugin())
-        trainer.add_plugin(PytorchCheckpointPlugin())
         for model in self.model:
             self.initial_state_dict = copy.deepcopy(model.state_dict())
             for loss, optimizer in itertools.product(self.loss, self.optimizer):
