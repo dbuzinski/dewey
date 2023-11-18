@@ -9,6 +9,7 @@ from dewey.core import use_plugin
 
 
 use_plugin("pytorch")
+use_plugin("tensorboard")
 use_plugin("training_progress")
 
 
