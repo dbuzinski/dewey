@@ -35,11 +35,7 @@ def run_backpropegation(plugin_data, next):
     optimizer.step()
     plugin_data.set("batch_loss", loss.detach().item())
     run_next_plugin(plugin_data, next)
-    running_loss = plugin_data.get("running_loss")
-    plugin_data.set("running_loss", running_loss + plugin_data.get("batch_loss"))
-    if plugin_data.get("batch_number") % 1000 == 999:
-        plugin_data.set("training_loss", plugin_data.get("running_loss") / 1000)
-        plugin_data.set("running_loss", 0)
+    update_backpropegation_loss(plugin_data)
 
 
 def run_validation(plugin_data, next):
@@ -60,5 +56,17 @@ def run_validation_batch(plugin_data, next):
     loss = loss_fn(batch_predictions, batch_labels)
     plugin_data.set("batch_loss", loss.detach().item())
     run_next_plugin(plugin_data, next)
+    update_validation_loss(plugin_data)
+
+
+def update_backpropegation_loss(plugin_data):
+    running_loss = plugin_data.get("running_loss")
+    plugin_data.set("running_loss", running_loss + plugin_data.get("batch_loss"))
+    if plugin_data.get("batch_number") % 1000 == 999:
+        plugin_data.set("training_loss", plugin_data.get("running_loss") / 1000)
+        plugin_data.set("running_loss", 0)
+
+
+def update_validation_loss(plugin_data):
     running_loss = plugin_data.get("running_loss")
     plugin_data.set("running_loss", running_loss + plugin_data.get("batch_loss"))

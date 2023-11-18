@@ -17,10 +17,13 @@ Create a file called `train.py`. Define your model, loss, and optimizer(s), and 
 For an example, put the `train.py` file in this repo's `examples` folder in your current directory, and run the command `dwy`.
 
 ## Todos:
-* remove next from plugins 
+* remove `next` input var from plugin module functions
+* add tensorboard & (torch) checkpoints back
 * clean up model initialization logic in TrainingManager
-* tensorflow base + checkpoint plugins
-* keras base + checkpoint plugins
+* install plugin deps on use (torch, tf, etc.)
+* plugin deps on other plugins
+* tensorflow plugin
+* keras plugin
 * doc
 * test
 * optimize code
