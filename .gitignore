@@ -1,9 +1,9 @@
-.pybuilder
+.*
+!.gitignore
+
 target
 venv
-
 *.pyc
-*.DS_Store
 
 data
 runs
