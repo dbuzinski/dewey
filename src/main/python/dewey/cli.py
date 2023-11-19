@@ -1,8 +1,7 @@
 import argparse
-import importlib
 import importlib.util
-from dewey.ModelTrainer import PluginManager
 
+from dewey.internal.PluginManager import PluginManager
 from dewey.TrainingManager import TrainingManager
 
 

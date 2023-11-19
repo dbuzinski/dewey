@@ -1,7 +1,7 @@
 import itertools
 
 from dewey.DataSpecification import DataSpecification
-from dewey.ModelTrainer import ModelTrainer
+from dewey.core import ModelTrainer
 
 
 class TrainingManager:
