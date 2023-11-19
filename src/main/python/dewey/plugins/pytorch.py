@@ -1,3 +1,4 @@
+import copy
 import torch
 
 from dewey.core import run_next_plugin
@@ -7,8 +8,11 @@ device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 
 def run_training(plugin_data, next):
-    plugin_data.get("model").to(device)
+    model = plugin_data.get("model")
+    initial_state_dict = copy.deepcopy(model.state_dict())
+    model.to(device)
     run_next_plugin(plugin_data, next)
+    model.load_state_dict(initial_state_dict)
 
 
 def run_epoch(plugin_data, next):

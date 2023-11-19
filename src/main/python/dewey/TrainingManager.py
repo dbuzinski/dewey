@@ -1,4 +1,3 @@
-import copy
 import itertools
 
 from dewey.DataSpecification import DataSpecification
@@ -8,7 +7,6 @@ from dewey.ModelTrainer import ModelTrainer
 class TrainingManager:
     def __init__(self, model, loss, optimizer, data_spec, total_epochs):
         self.model = model
-        self.initial_state_dict = None
         self.data_spec = data_spec
         self.optimizer = optimizer
         self.loss = loss
@@ -17,11 +15,9 @@ class TrainingManager:
     def train(self):
         trainer = ModelTrainer(self.data_spec)
         for model in self.model:
-            self.initial_state_dict = copy.deepcopy(model.state_dict())
             for loss, optimizer in itertools.product(self.loss, self.optimizer):
                 trainer.load_spec(model, loss, optimizer)
                 trainer.train(total_epochs=self.total_epochs)
-                model.load_state_dict(self.initial_state_dict)
 
     @staticmethod
     def from_training_module(module, epochs=1):
