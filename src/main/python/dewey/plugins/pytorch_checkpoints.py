@@ -2,8 +2,6 @@ import hashlib
 import os
 import torch
 
-from dewey.core import run_next_plugin
-
 
 checkpoints_dir = "models"
 
@@ -22,7 +20,7 @@ def run_epoch(plugin_data, next):
         plugin_data.set("validation_loss", checkpoint["validation_loss"])
         plugin_data.set("loaded_checkpoint", True)
         print(f"Epoch {plugin_data.get('epoch_number')+1}: Loaded from checkpoint.")
-    run_next_plugin(plugin_data, next)
+    next(plugin_data)
     if not plugin_data.get("loaded_checkpoint"):
         os.makedirs(chkp_folder, exist_ok=True)
         torch.save({

@@ -32,7 +32,7 @@ class PluginManager:
             ind = plugin_name.index(PluginManager.delimiter)
             package_name = plugin_name[0:ind]
             plugin_module = plugin_name[ind+1:]
-            subprocess.call([sys.executable, '-m', 'pip3', 'install', package_name])
+            subprocess.call([sys.executable, '-m', 'pip', 'install', package_name])
         else:
             package_name = "pydewey"
             plugin_module = f"dewey.plugins.{plugin_name}"
@@ -49,6 +49,10 @@ class PluginManager:
 
     def run_stage(self, trainer, stage, plugin_data):
         plugin_iterator = reversed([trainer] + self.plugins)
-        plugin = next(plugin_iterator)
-        plugin_fn = getattr(plugin, stage)
-        plugin_fn(plugin_data, plugin_iterator)
+        stage_fns = map(lambda plugin: getattr(plugin, stage), plugin_iterator)
+
+        def run_next_plugin(plugin_data):
+            f = next(stage_fns)
+            f(plugin_data, run_next_plugin)
+        plugin_fn = next(stage_fns)
+        plugin_fn(plugin_data, run_next_plugin)
