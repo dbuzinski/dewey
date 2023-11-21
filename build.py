@@ -31,7 +31,7 @@ urls = {"Bug Tracker": "https://github.com/dbuzinski/dewey/issues",
         "Source Code": "https://github.com/dbuzinski/dewey",
         }
 license = "Apache License, Version 2.0"
-version = "0.3.1"
+version = "0.3.2.dev"
 
 requires_python = ">=3.8"
 
