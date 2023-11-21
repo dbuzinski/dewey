@@ -15,4 +15,4 @@ jobs:
       uses: pybuilder/build@v9
       with:
         pyb-args: "-E ci -v"
-        pyb-version: "0.13.10"
+        pyb-version: "==0.13.10"
