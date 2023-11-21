@@ -31,7 +31,7 @@ urls = {"Bug Tracker": "https://github.com/dbuzinski/dewey/issues",
         "Source Code": "https://github.com/dbuzinski/dewey",
         }
 license = "Apache License, Version 2.0"
-version = "0.3.1.dev"
+version = "0.3.1"
 
 requires_python = ">=3.8"
 
@@ -51,9 +51,9 @@ def set_properties(project):
 
     project.set_property('distutils_extra_dependencies',
                          {"pytorch": ["torch>=2.1.0"],
-                          "pytorch_checkpoints": ["torch>=2.1.0"],
-                          "pytorch_tensorboard": ["torch>=2.1.0", "tensorboard>=2.13.0"],
-                          "training_progress": ["alive-progress>=3.1.5"]})
+                          "pytorch-checkpoints": ["torch>=2.1.0"],
+                          "pytorch-tensorboard": ["torch>=2.1.0", "tensorboard>=2.13.0"],
+                          "training-progress": ["alive-progress>=3.1.5"]})
 
 
 

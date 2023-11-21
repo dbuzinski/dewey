@@ -38,7 +38,8 @@ class PluginManager:
         else:
             package_name = "pydewey"
             plugin_module = f"dewey.plugins.{plugin_name}"
-            pip_cmd = [sys.executable, '-m', 'pip', 'install', '--disable-pip-version-check', f'pydewey[{plugin_name}]']
+            extras_name = plugin_name.replace('_', '-')
+            pip_cmd = [sys.executable, '-m', 'pip', 'install', '--disable-pip-version-check', f'pydewey[{extras_name}]']
             subprocess.run(pip_cmd,
                            stdout=subprocess.DEVNULL)
         plugin = self.load_plugin_module(plugin_module)
