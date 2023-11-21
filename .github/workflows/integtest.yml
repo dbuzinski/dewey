@@ -20,6 +20,8 @@ jobs:
       run: |
         pip install --upgrade pip
         pip install pydewey
+    - name: install dependencies for example
+      run: pip install torch torchvision
     - name: run dwy
       run: |
         cd examples
