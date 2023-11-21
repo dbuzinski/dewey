@@ -1,12 +1,14 @@
 #   -*- coding: utf-8 -*-
-from pybuilder.core import Author, use_plugin, init
+from pybuilder.core import Author, use_plugin, init, use_bldsup
+
+use_bldsup(build_support_dir="build_utils")
 
 use_plugin("python.core")
 use_plugin("python.install_dependencies")
 use_plugin("python.unittest")
 use_plugin("python.flake8")
 use_plugin("python.coverage")
-use_plugin("python.distutils")
+use_plugin("distutils_extra_plugin")
 
 
 name = "pydewey"
@@ -46,3 +48,12 @@ def set_properties(project):
     project.set_property("ut_coverage_branch_threshold_warn", 80)
     project.set_property("ut_coverage_branch_partial_threshold_warn", 80)
     project.set_property('coverage_break_build', False)
+
+    project.set_property('distutils_extra_dependencies',
+                         {"pytorch": ["torch>=2.1.0"],
+                          "pytorch_checkpoints": ["torch>=2.1.0"],
+                          "pytorch_tensorboard": ["torch>=2.1.0", "tensorboard>=2.13.0"],
+                          "training_progress": ["alive-progress>=3.1.5"]})
+
+
+

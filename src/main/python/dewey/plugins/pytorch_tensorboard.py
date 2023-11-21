@@ -2,7 +2,6 @@ from datetime import datetime
 from torch.utils.tensorboard import SummaryWriter
 
 
-dependencies = ["tensorboard>=2.13.0"]
 model_name = "model"
 timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
 writer = SummaryWriter(f"runs/{model_name}_{timestamp}")

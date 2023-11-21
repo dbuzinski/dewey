@@ -1,9 +1,6 @@
 from alive_progress import alive_bar
 
 
-dependencies = ["alive-progress>=3.1.5"]
-
-
 def run_epoch(plugin_data, next):
     title = f"Epoch {plugin_data.get('epoch_number')+1}:"
     disable = plugin_data.get("loaded_checkpoint")
