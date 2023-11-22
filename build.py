@@ -53,6 +53,7 @@ def set_properties(project):
                          {"pytorch": ["torch>=2.1.0"],
                           "pytorch-checkpoints": ["torch>=2.1.0"],
                           "pytorch-tensorboard": ["torch>=2.1.0", "tensorboard>=2.13.0"],
+                          "tensorflow": ["tensorflow>=2.13.0"],
                           "training-progress": ["alive-progress>=3.1.5"]})
 
 
