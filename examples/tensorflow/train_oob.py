@@ -1,9 +1,10 @@
-# TensorFlow and tf.keras
-import tensorflow as tf
+import random
 import requests
-requests.packages.urllib3.disable_warnings()
 import ssl
+import tensorflow as tf
 
+
+requests.packages.urllib3.disable_warnings()
 try:
     _create_unverified_https_context = ssl._create_unverified_context
 except AttributeError:
@@ -13,10 +14,21 @@ else:
     # Handle target environment that doesn't support HTTPS verification
     ssl._create_default_https_context = _create_unverified_https_context
 
-fashion_mnist = tf.keras.datasets.fashion_mnist
 
+BATCH_SIZE = 32
+NUM_EPOCHS = 5
+
+
+tf.random.set_seed(0)
+random.seed(0)
+
+
+# Prep data
+fashion_mnist = tf.keras.datasets.fashion_mnist
 (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
 
+
+# Prep model
 model = tf.keras.Sequential([
     tf.keras.layers.Conv2D(6, (5, 5), activation='relu', input_shape=(28, 28, 1)),
     tf.keras.layers.MaxPooling2D((2, 2)),
@@ -27,14 +39,19 @@ model = tf.keras.Sequential([
     tf.keras.layers.Dense(10)
 ])
 
+
+# Set loss and optimizer
 model.compile(
     optimizer=tf.keras.optimizers.legacy.SGD(learning_rate=0.001, momentum=0.9),
     loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
     metrics=['accuracy']
 )
 
-model.fit(train_images, train_labels, epochs=5, batch_size=32)
 
+# Training loop
+model.fit(train_images, train_labels, epochs=NUM_EPOCHS, batch_size=BATCH_SIZE, shuffle=True)
+
+
+# Evaluate
 test_loss, test_acc = model.evaluate(test_images,  test_labels, verbose=2)
-
 print('\nTest accuracy:', test_acc)
