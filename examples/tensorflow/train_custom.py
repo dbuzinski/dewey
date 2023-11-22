@@ -46,40 +46,34 @@ model = tf.keras.Sequential([
 # Prep loss & optimizer
 loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 optimizer = tf.keras.optimizers.legacy.SGD(learning_rate=0.001, momentum=0.9)
+epoch_accuracy = tf.keras.metrics.SparseCategoricalAccuracy()
+epoch_loss_avg = tf.keras.metrics.Mean()
 
 
-# Helper functions
-def calculate_loss(model, x, y, training):
-    # training=training is needed only if there are layers with different
-    # behavior during training versus inference (e.g. Dropout).
-    y_ = model(x, training=training)
-
-    return loss(y_true=y, y_pred=y_)
-
-
-def grad(model, inputs, targets):
+@tf.function
+def train_step(x, y):
     with tf.GradientTape() as tape:
-        loss_value = calculate_loss(model, inputs, targets, training=True)
-        return loss_value, tape.gradient(loss_value, model.trainable_variables)
+        targets = model(x, training=True)
+        loss_value = loss(y, targets)
+    grads = tape.gradient(loss_value, model.trainable_weights)
+    optimizer.apply_gradients(zip(grads, model.trainable_weights))
+    epoch_accuracy.update_state(y, targets)
+    epoch_loss_avg.update_state(loss_value)
+    return loss_value
+
+
+@tf.function
+def test_step(x, y):
+    val_logits = model(x, training=False)
+    val_acc_metric.update_state(y, val_logits)
 
 
 # Training loop
 for epoch in range(NUM_EPOCHS):
     tic = time.perf_counter()
-    epoch_loss_avg = tf.keras.metrics.Mean()
-    epoch_accuracy = tf.keras.metrics.SparseCategoricalAccuracy()
 
     for x, y in ds_train_batch:
-        # Optimize the model
-        loss_value, grads = grad(model, x, y)
-        optimizer.apply_gradients(zip(grads, model.trainable_variables))
-
-        # Track progress
-        epoch_loss_avg.update_state(loss_value)  # Add current batch loss
-        # Compare predicted label to actual label
-        # training=True is needed only if there are layers with different
-        # behavior during training versus inference (e.g. Dropout).
-        epoch_accuracy.update_state(y, model(x, training=True))
+        train_step(x, y)
 
     # End epoch
     toc = time.perf_counter()
