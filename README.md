@@ -17,12 +17,12 @@ Create a file called `train.py`. Define your model, loss, and optimizer(s), and 
 For an example, put the `train.py` file in this repo's `examples` folder in your current directory, and run the command `dwy`.
 
 ## Todos:
-* install plugin deps on use (torch, tf, etc.)
-* plugin deps on other plugins
-* tensorflow plugin
-* keras plugin
-* doc
+* tf checkpoint plugin
+* improve tf plugin validation design / implementation
+* more dynamic loss reporting (different batch sizes)
+* plugin deps on other plugins (install once)
 * test
 * optimize code
+* doc
 * distributed training
 * better support multi-model workflows

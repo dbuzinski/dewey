@@ -20,9 +20,13 @@ jobs:
       run: |
         pip install --upgrade pip
         pip install pydewey
-    - name: install dependencies for example
+    - name: install dependencies for pytorch example
       run: pip install torch torchvision
-    - name: run dwy
-      run: |
-        cd examples
-        dwy -e 1
+    - name: run dwy for pytorch model
+      working-directory: ./examples/pytorch
+      run: dwy -e 1
+    - name: install dependencies for tensorflow example
+      run: pip install tensorflow
+    - name: run dwy for tensorflow model
+      working-directory: ./examples/tensorflow
+      run: dwy -e 1
