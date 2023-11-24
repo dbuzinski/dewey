@@ -7,6 +7,7 @@ from dewey.core import use_plugin
 
 use_plugin("tensorflow")
 use_plugin("training_progress")
+use_plugin("tensorflow_checkpoints")
 
 
 requests.packages.urllib3.disable_warnings()
