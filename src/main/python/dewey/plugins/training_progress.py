@@ -19,7 +19,8 @@ def run_training_batch(plugin_data, next):
 
 
 def run_backpropegation(plugin_data, next):
+    update_loss_ind = plugin_data.get("training_data_len") // 20
     bar = plugin_data.get("progress_bar")
     next(plugin_data)
-    if plugin_data.get("batch_number") % 1000 == 999:
+    if plugin_data.get("batch_number") % update_loss_ind == update_loss_ind - 1:
         bar.text(f"Training Loss: {str(plugin_data.get('training_loss'))}")

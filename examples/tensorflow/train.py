@@ -1,6 +1,4 @@
 import random
-import requests
-import ssl
 import tensorflow as tf
 
 from dewey.core import use_plugin
@@ -8,17 +6,6 @@ from dewey.core import use_plugin
 use_plugin("tensorflow")
 use_plugin("training_progress")
 use_plugin("tensorflow_checkpoints")
-
-
-requests.packages.urllib3.disable_warnings()
-try:
-    _create_unverified_https_context = ssl._create_unverified_context
-except AttributeError:
-    # Legacy Python that doesn't verify HTTPS certificates by default
-    pass
-else:
-    # Handle target environment that doesn't support HTTPS verification
-    ssl._create_default_https_context = _create_unverified_https_context
 
 
 tf.random.set_seed(0)

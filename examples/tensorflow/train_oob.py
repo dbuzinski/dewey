@@ -1,18 +1,5 @@
 import random
-import requests
-import ssl
 import tensorflow as tf
-
-
-requests.packages.urllib3.disable_warnings()
-try:
-    _create_unverified_https_context = ssl._create_unverified_context
-except AttributeError:
-    # Legacy Python that doesn't verify HTTPS certificates by default
-    pass
-else:
-    # Handle target environment that doesn't support HTTPS verification
-    ssl._create_default_https_context = _create_unverified_https_context
 
 
 BATCH_SIZE = 32
@@ -49,9 +36,4 @@ model.compile(
 
 
 # Training loop
-model.fit(train_images, train_labels, epochs=NUM_EPOCHS, batch_size=BATCH_SIZE, shuffle=True)
-
-
-# Evaluate
-test_loss, test_acc = model.evaluate(test_images,  test_labels, verbose=2)
-print('\nTest accuracy:', test_acc)
+model.fit(train_images, train_labels, epochs=NUM_EPOCHS, batch_size=BATCH_SIZE, shuffle=True, validation_data=(test_images, test_labels))

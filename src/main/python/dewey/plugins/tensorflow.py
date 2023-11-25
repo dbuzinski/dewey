@@ -11,7 +11,7 @@ def run_training(plugin_data, next):
         with tf.GradientTape() as tape:
             preds = model(x, training=True)
             loss = loss_fn(y, preds)
-        grads = tape.gradient(loss, model.trainable_weights)
+            grads = tape.gradient(loss, model.trainable_weights)
         optimizer.apply_gradients(zip(grads, model.trainable_weights))
         return preds, loss
     plugin_data.set("tf_train_step_fn", train_step)
@@ -46,6 +46,7 @@ def run_backpropegation(plugin_data, next):
 
 
 def run_validation(plugin_data, next):
+    plugin_data.set("running_loss", 0)
     next(plugin_data)
     plugin_data.set("validation_loss", plugin_data.get("running_loss") / plugin_data.get("validation_data_len"))
 
@@ -62,10 +63,11 @@ def run_validation_batch(plugin_data, next):
 
 
 def update_backpropegation_loss(plugin_data):
+    update_loss_ind = plugin_data.get("training_data_len") // 20
     running_loss = plugin_data.get("running_loss")
     plugin_data.set("running_loss", running_loss + plugin_data.get("batch_loss"))
-    if plugin_data.get("batch_number") % 1000 == 999:
-        plugin_data.set("training_loss", plugin_data.get("running_loss") / 1000)
+    if plugin_data.get("batch_number") % update_loss_ind == update_loss_ind - 1:
+        plugin_data.set("training_loss", plugin_data.get("running_loss") / update_loss_ind)
         plugin_data.set("running_loss", 0)
 
 

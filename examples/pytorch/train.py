@@ -16,14 +16,16 @@ use_plugin("pytorch_checkpoints")
 random.seed(0)
 torch.manual_seed(0)
 
+batch_size = 32
+
 # prep data
 transform = transforms.Compose(
     [transforms.ToTensor(),
     transforms.Normalize((0.5,), (0.5,))])
 training_set = torchvision.datasets.FashionMNIST('./data', train=True, transform=transform, download=True)
 validation_set = torchvision.datasets.FashionMNIST('./data', train=False, transform=transform, download=True)
-training_data = DataLoader(training_set, batch_size=32, shuffle=True)
-validation_data = DataLoader(validation_set, batch_size=4, shuffle=False)
+training_data = DataLoader(training_set, batch_size=batch_size, shuffle=True)
+validation_data = DataLoader(validation_set, batch_size=batch_size, shuffle=False)
 
 
 class GarmentClassifier(nn.Module):
