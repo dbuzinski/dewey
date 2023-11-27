@@ -17,11 +17,11 @@ Create a file called `train.py`. Define your model, loss, and optimizer(s), and 
 For an example, put the `train.py` file in this repo's `examples` folder in your current directory, and run the command `dwy`.
 
 ## Todos:
+* improve reporting to show hyperparams
 * RNG seed handling
 * plugin deps on other plugins (install once)
 * build on above for full plugins for each framework
 * plugin priorities?
-* improve reporting to show hyperparams
 * model naming conventions for checkpoints
 * test
 * optimize code
