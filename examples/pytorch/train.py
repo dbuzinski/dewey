@@ -1,4 +1,5 @@
 import random
+from re import A
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -16,16 +17,33 @@ use_plugin("pytorch_checkpoints")
 random.seed(0)
 torch.manual_seed(0)
 
-batch_size = 32
+
+# hyperparameters
+hyperparameters = {
+    "batch_size": 32,
+    "learning_rate": 0.001,
+    "momentum": 0.9,
+    "epochs": 5
+}
+
 
 # prep data
-transform = transforms.Compose(
-    [transforms.ToTensor(),
-    transforms.Normalize((0.5,), (0.5,))])
-training_set = torchvision.datasets.FashionMNIST('./data', train=True, transform=transform, download=True)
-validation_set = torchvision.datasets.FashionMNIST('./data', train=False, transform=transform, download=True)
-training_data = DataLoader(training_set, batch_size=batch_size, shuffle=True)
-validation_data = DataLoader(validation_set, batch_size=batch_size, shuffle=False)
+def data(hyperparams):
+    batch_size = hyperparams["batch_size"]
+    transform = transforms.Compose(
+        [transforms.ToTensor(),
+         transforms.Normalize((0.5,), (0.5,))])
+    training_set = torchvision.datasets.FashionMNIST('./data',
+                                                     train=True,
+                                                     transform=transform,
+                                                     download=True)
+    validation_set = torchvision.datasets.FashionMNIST('./data',
+                                                       train=False,
+                                                       transform=transform,
+                                                       download=True)
+    training_data = DataLoader(training_set, batch_size=batch_size, shuffle=True)
+    validation_data = DataLoader(validation_set, batch_size=batch_size, shuffle=False)
+    return {"training_data": training_data, "validation_data": validation_data}
 
 
 class GarmentClassifier(nn.Module):
@@ -48,9 +66,14 @@ class GarmentClassifier(nn.Module):
         return x
 
 
-# set key vals
-epochs = 5
+# Define model
 model = GarmentClassifier()
+
+# Define loss
 loss = torch.nn.CrossEntropyLoss()
-optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
-# optimizer = [torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9) for lr in [0.001, 0.005]]
+
+# Define optimizer
+def optimizer(hyperparams):
+    lr = hyperparams["learning_rate"]
+    momentum = hyperparams["momentum"]
+    return torch.optim.SGD(model.parameters(), lr=lr, momentum=momentum)

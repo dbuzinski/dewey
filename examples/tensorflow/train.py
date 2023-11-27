@@ -14,7 +14,6 @@ random.seed(0)
 
 batch_size = 32
 shuffle_buffer_size = 100
-epochs = 5
 
 
 # Prep data
@@ -23,7 +22,7 @@ fashion_mnist = tf.keras.datasets.fashion_mnist
 
 training_data = tf.data.Dataset.from_tensor_slices((train_examples, train_labels)).shuffle(shuffle_buffer_size).batch(batch_size)
 validation_data = tf.data.Dataset.from_tensor_slices((test_examples, test_labels)).batch(batch_size)
-
+data = {"training_data": training_data, "validation_data": validation_data}
 
 # Prep model
 model = tf.keras.Sequential([

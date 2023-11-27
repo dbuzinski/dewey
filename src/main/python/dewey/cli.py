@@ -25,6 +25,6 @@ def main():
     plugin_manager = PluginManager.get_instance()
     plugin_manager.install_plugins()
 
-    epochs = args.epochs or module.epochs
+    epochs = args.epochs
     trainer = TrainingManager.from_training_module(module, epochs=epochs)
     trainer.train()
