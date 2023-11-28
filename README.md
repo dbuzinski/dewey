@@ -12,19 +12,18 @@ Install using pip:
 
 `pip install pydewey`
 
-Create a file called `train.py`. Define your model, loss, and optimizer(s), and Dew(ey) it up real good!
+Create a file called `train.py`. Define your hyperparameters, model, loss, and optimizer, and Dew(ey) it up real good!
 
 For an example, put the `train.py` file in this repo's `examples` folder in your current directory, and run the command `dwy`.
 
 ## Todos:
-* improve reporting to show hyperparams
-* RNG seed handling
+* RNG seed handling for train.py and for actual training/ reproducibility
 * plugin deps on other plugins (install once)
 * build on above for full plugins for each framework
 * plugin priorities?
 * model naming conventions for checkpoints
-* test
-* optimize code
-* doc
 * distributed training
 * better support multi-model workflows
+* test
+* optimize
+* doc

@@ -1,5 +1,4 @@
 import random
-from re import A
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -20,10 +19,9 @@ torch.manual_seed(0)
 
 # hyperparameters
 hyperparameters = {
-    "batch_size": 32,
-    "learning_rate": 0.001,
+    "batch_size": [32, 64],
+    "learning_rate": [0.001, 0.0005],
     "momentum": 0.9,
-    "epochs": 5
 }
 
 
@@ -69,8 +67,10 @@ class GarmentClassifier(nn.Module):
 # Define model
 model = GarmentClassifier()
 
+
 # Define loss
 loss = torch.nn.CrossEntropyLoss()
+
 
 # Define optimizer
 def optimizer(hyperparams):

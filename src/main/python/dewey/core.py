@@ -24,12 +24,13 @@ class ModelTrainer:
         self.training_spec["loss"] = loss
         self.training_spec["optimizer"] = optimizer
 
-    def train(self):
+    def train(self, total_epochs=1):
         plugin_data = PluginData()
         plugin_data.set("model", self.training_spec["model"])
         plugin_data.set("loss", self.training_spec["loss"])
         plugin_data.set("optimizer", self.training_spec["optimizer"])
-        plugin_data.set("total_epochs", self.training_spec.get("hyperparameters").get("epochs", [1])[0])
+        plugin_data.set("hyperparameters", self.training_spec["hyperparameters"])
+        plugin_data.set("total_epochs", total_epochs)
         self.plugin_manager.run_stage(self, "run_training", plugin_data)
 
     def run_training(self, plugin_data, next):

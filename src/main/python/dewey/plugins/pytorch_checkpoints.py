@@ -34,6 +34,13 @@ def run_epoch(plugin_data, next):
 
 
 def get_checkpoint_folder(plugin_data):
-    hyperparam_str = str(plugin_data.get("loss")) + str(plugin_data.get("optimizer"))
+    hyperparam_str = hyperparams_to_str(plugin_data.get("hyperparameters"))
     hyperparam_hash = hashlib.blake2b(hyperparam_str.encode('utf-8'), digest_size=16).hexdigest()
     return os.path.join(checkpoints_dir, hyperparam_hash)
+
+
+def hyperparams_to_str(hyperparams):
+    def stringify(val):
+        return str(val)
+
+    return ", ".join(list(map(lambda it: f"{it[0]}: {stringify(it[1])}", hyperparams.items())))

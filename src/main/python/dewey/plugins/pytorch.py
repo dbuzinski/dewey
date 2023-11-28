@@ -1,4 +1,5 @@
 import copy
+import random
 import torch
 
 
@@ -18,6 +19,8 @@ def run_epoch(plugin_data, next):
     plugin_data.get("model").train()
     plugin_data.set("running_loss", 0)
     next(plugin_data)
+    random.seed(0)
+    torch.manual_seed(0)
 
 
 def run_training_batch(plugin_data, next):

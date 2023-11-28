@@ -5,18 +5,17 @@ from dewey.core import ModelTrainer
 
 
 class TrainingManager:
-    def __init__(self, hyperparameters, data, model, loss, optimizer):
+    def __init__(self, hyperparameters, data, model, loss, optimizer, total_epochs=1):
         self.hyperparameters = hyperparameters
         self.data = data
         self.model = model
         self.loss = loss
         self.optimizer = optimizer
+        self.total_epochs = total_epochs
 
     def train(self):
         trainer = ModelTrainer()
         hyperparameters = self.hyperparameters
-        if not hyperparameters:
-            hyperparameters = {"epochs": 1}
         hyperparams = _vals_to_lists(hyperparameters)
         keys, values = zip(*hyperparams.items())
         hyperparam_combs = [dict(zip(keys, v)) for v in itertools.product(*values)]
@@ -25,19 +24,18 @@ class TrainingManager:
             model = _load_from_hyperparameters(self.model, h)
             loss = _load_from_hyperparameters(self.loss, h)
             optimizer = _load_from_hyperparameters(self.optimizer, h)
-            trainer.load_spec(hyperparams, data, model, loss, optimizer)
-            trainer.train()
+            trainer.load_spec(h, data, model, loss, optimizer)
+            trainer.train(total_epochs=self.total_epochs)
 
     @staticmethod
     def from_training_module(module, epochs=None):
+        epochs = epochs or 1
         hyperparameters = _load_optional_from_module(module, "hyperparameters", {})
-        if epochs:
-            hyperparameters["epochs"] = epochs
         data = _load_required_from_module(module, "data")
         model = _load_required_from_module(module, "model")
         loss = _load_required_from_module(module, "loss")
         optimizer = _load_required_from_module(module, "optimizer")
-        return TrainingManager(hyperparameters, data, model, loss, optimizer)
+        return TrainingManager(hyperparameters, data, model, loss, optimizer, total_epochs=epochs)
 
 
 def _vals_to_lists(dict):
