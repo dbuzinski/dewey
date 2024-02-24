@@ -15,8 +15,7 @@ class TrainingManager:
 
     def train(self):
         trainer = ModelTrainer()
-        hyperparameters = self.hyperparameters
-        hyperparams = _vals_to_lists(hyperparameters)
+        hyperparams = _vals_to_lists(self.hyperparameters)
         keys, values = zip(*hyperparams.items())
         hyperparam_combs = [dict(zip(keys, v)) for v in itertools.product(*values)]
         for h in hyperparam_combs:

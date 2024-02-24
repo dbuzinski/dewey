@@ -7,25 +7,22 @@ import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 from dewey.core import use_plugin
 
+
 use_plugin("pytorch")
 use_plugin("training_progress")
 use_plugin("pytorch_checkpoints")
 
-
-# set seed
+# Set seed
 random.seed(0)
 torch.manual_seed(0)
 
-
-# hyperparameters
+# Define hyperparameters
 hyperparameters = {
     "batch_size": [32, 64],
     "learning_rate": [0.001, 0.0005],
-    "momentum": 0.9,
 }
 
-
-# prep data
+# Define dataset
 def data(hyperparams):
     batch_size = hyperparams["batch_size"]
     transform = transforms.Compose(
@@ -63,17 +60,13 @@ class GarmentClassifier(nn.Module):
         x = self.fc3(x)
         return x
 
-
 # Define model
 model = GarmentClassifier()
-
 
 # Define loss
 loss = torch.nn.CrossEntropyLoss()
 
-
 # Define optimizer
 def optimizer(hyperparams):
     lr = hyperparams["learning_rate"]
-    momentum = hyperparams["momentum"]
-    return torch.optim.SGD(model.parameters(), lr=lr, momentum=momentum)
+    return torch.optim.Adam(model.parameters(), lr=lr)

@@ -10,8 +10,8 @@ def run_epoch(plugin_data, next):
     chkp_folder = get_checkpoint_folder(plugin_data)
     model_name = "model"
     chkp_name = model_name + str(plugin_data.get("epoch_number"))
-    path = os.path.join(chkp_folder, chkp_name)
-    checkpoint_exists = os.path.exists(path + ".index")
+    path = os.path.join(chkp_folder, chkp_name + ".weights.h5")
+    checkpoint_exists = os.path.exists(path + ".json")
     if checkpoint_exists and plugin_data.get("use_checkpoints"):
         plugin_data.get("model").load_weights(path)
         checkpoint = load_loss(path + ".json")
