@@ -13,7 +13,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     defaults:
       run:
-        shell: ${{ matrix.os == 'Windows' && 'cmd' || 'bash' }}
+        shell: ${{ matrix.os == 'windows-latest' && 'cmd' || 'bash' }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v4
