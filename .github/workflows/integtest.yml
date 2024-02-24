@@ -3,10 +3,6 @@ name: Integration Tests
 on:
   workflow_dispatch:
 
-defaults:
-  run:
-    shell: ${{ matrix.os == 'Windows' && 'cmd' || 'bash' }}
-
 jobs:
   integ:
     strategy:
@@ -15,6 +11,9 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python-version: ['3.8', '3.9', '3.10', '3.11']
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: ${{ matrix.os == 'Windows' && 'cmd' || 'bash' }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v4
