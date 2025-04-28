@@ -24,8 +24,7 @@ def run_epoch(plugin_data, next):
 
 
 def run_training_batch(plugin_data, next):
-    batch_data = plugin_data.get("batch_data")
-    iter_tensors_to_device(batch_data)
+    batch_data = iter_tensors_to_device(plugin_data.get("batch_data"))
     model = plugin_data.get("model")
     plugin_data.set("batch_predictions", model(batch_data))
     next(plugin_data)
@@ -33,8 +32,7 @@ def run_training_batch(plugin_data, next):
 
 def run_backpropegation(plugin_data, next):
     batch_predictions = plugin_data.get("batch_predictions")
-    batch_labels = plugin_data.get("batch_labels")
-    iter_tensors_to_device(batch_labels)
+    batch_labels = iter_tensors_to_device(plugin_data.get("batch_labels"))
     loss_fn = plugin_data.get("loss")
     optimizer = plugin_data.get("optimizer")
     optimizer.zero_grad()
@@ -56,10 +54,8 @@ def run_validation(plugin_data, next):
 
 def run_validation_batch(plugin_data, next):
     model = plugin_data.get("model")
-    batch_data = plugin_data.get("batch_data")
-    iter_tensors_to_device(batch_data)
-    batch_labels = plugin_data.get("batch_labels")
-    iter_tensors_to_device(batch_labels)
+    batch_data = iter_tensors_to_device(plugin_data.get("batch_data"))
+    batch_labels = iter_tensors_to_device(plugin_data.get("batch_labels"))
     batch_predictions = model(batch_data)
     plugin_data.set("batch_predictions", batch_predictions)
     loss_fn = plugin_data.get("loss")
@@ -83,9 +79,12 @@ def update_validation_loss(plugin_data):
     plugin_data.set("running_loss", running_loss + plugin_data.get("batch_loss"))
 
 def iter_tensors_to_device(it):
+    it_type = type(it)
     if type(it) == torch.Tensor:
-        it.to(device)
+        return it.to(device)
     else:
+        accum = [];
         for item in it:
-            iter_tensors_to_device(item)
+            accum.append(iter_tensors_to_device(item))
+        return it_type(accum)
 

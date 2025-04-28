@@ -18,7 +18,7 @@ torch.manual_seed(0)
 
 # Define hyperparameters
 hyperparameters = {
-    "batch_size": [32, 64],
+    "batch_size": [512],
     "learning_rate": [0.001, 0.0005],
 }
 
