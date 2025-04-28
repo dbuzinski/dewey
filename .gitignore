@@ -4,6 +4,7 @@
 target
 venv
 *.pyc
+*.pt
 
 data
 runs
