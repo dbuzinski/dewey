@@ -1,5 +1,7 @@
 import argparse
 import importlib.util
+import os
+import sys
 
 from dewey.internal.PluginManager import PluginManager
 from dewey.TrainingManager import TrainingManager
@@ -18,7 +20,12 @@ def main():
     args = parser.parse_args()
 
     # Import training spec
-    spec = importlib.util.spec_from_file_location("train", "train.py")
+    train_path = "train.py"
+    train_dir = os.path.dirname(os.path.abspath(train_path))
+    if train_dir not in sys.path:
+        sys.path.insert(0, train_dir)
+
+    spec = importlib.util.spec_from_file_location("train", train_path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
 

@@ -46,6 +46,7 @@ class ModelTrainer:
             for batch_number, (batch_data, batch_labels) in enumerate(data):
                 plugin_data.prepare_batch(batch_number, batch_data, batch_labels)
                 self.plugin_manager.run_stage(self, "run_training_batch", plugin_data)
+                plugin_data.clear_batch()
             if plugin_data.get("validation_data_len"):
                 self.plugin_manager.run_stage(self, "run_validation", plugin_data)
 
@@ -60,6 +61,7 @@ class ModelTrainer:
         for batch_number, (batch_data, batch_labels) in enumerate(data):
             plugin_data.prepare_batch(batch_number, batch_data, batch_labels)
             self.plugin_manager.run_stage(self, "run_validation_batch", plugin_data)
+            plugin_data.clear_batch()
 
     def run_validation_batch(self, plugin_data, next):
         pass
