@@ -16,7 +16,6 @@ class PluginData:
         self.data["batch_labels"] = batch_labels
 
     def clear_batch(self):
-        del(self.data["batch_number"])
-        del(self.data["batch_data"])
-        del(self.data["batch_labels"])
-
+        del self.data["batch_number"]
+        del self.data["batch_data"]
+        del self.data["batch_labels"]

@@ -69,7 +69,7 @@ def update_backpropegation_loss(plugin_data):
     update_loss_ind = 50
     running_loss = plugin_data.get("running_loss")
     plugin_data.set("running_loss", running_loss + plugin_data.get("batch_loss"))
-    if plugin_data.get("batch_number") % update_loss_ind == update_loss_ind - 1:
+    if (plugin_data.get("batch_number")  + 1 ) % update_loss_ind == update_loss_ind:
         plugin_data.set("training_loss", plugin_data.get("running_loss") / update_loss_ind)
         plugin_data.set("running_loss", 0)
 
@@ -78,13 +78,13 @@ def update_validation_loss(plugin_data):
     running_loss = plugin_data.get("running_loss")
     plugin_data.set("running_loss", running_loss + plugin_data.get("batch_loss"))
 
+
 def iter_tensors_to_device(it):
     it_type = type(it)
-    if type(it) == torch.Tensor:
+    if type(it) is torch.Tensor:
         return it.to(device)
     else:
-        accum = [];
+        accum = []
         for item in it:
             accum.append(iter_tensors_to_device(item))
         return it_type(accum)
-
