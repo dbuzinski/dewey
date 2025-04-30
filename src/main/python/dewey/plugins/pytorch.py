@@ -66,7 +66,7 @@ def run_validation_batch(plugin_data, next):
 
 
 def update_backpropegation_loss(plugin_data):
-    update_loss_ind = plugin_data.get("training_data_len") // 20
+    update_loss_ind = 50
     running_loss = plugin_data.get("running_loss")
     plugin_data.set("running_loss", running_loss + plugin_data.get("batch_loss"))
     if plugin_data.get("batch_number") % update_loss_ind == update_loss_ind - 1:

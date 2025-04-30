@@ -1,6 +1,6 @@
 from alive_progress import alive_bar
 
-update_loss_ind = 100
+update_loss_ind = 50
 
 def run_training(plugin_data, next):
     print(f"Training - {hyperparams_to_str(plugin_data.get('hyperparameters'))}")
