@@ -1,11 +1,10 @@
 # Dewey
-Dewey is a fast reproducible training automation tool for MLOps pipelines.
 
-Dewey is a machine learning automation tool written to create consistent reproducible ways to train models in a framework agnostic way. It allows providing a training specification, and the Dewey training framework takes care of all of the standard boilerplate code involving writing training loops, monitoring & metrics, managing model checkpoints, and more.
+Dewey is an AI training automation tool written to create consistent reproducible ways to train models in a framework agnostic way. It allows providing a training specification, and the Dewey training framework takes care of all of the standard boilerplate code involving writing training loops, monitoring & metrics, managing model checkpoints, and more.
+
+**Please note:** This repository is currently in alpha development. It is subject to rapid updates and breaking API changes. But please stay posted. More good stuff is on the way.
 
 ![](https://media.giphy.com/media/129g9HK07tEtZm/giphy.gif)
-
-**Please note:** Don't expect much... YET! This repository is currently in alpha development. It is subject to rapid updates and breaking API changes. But please stay posted. Good stuff is on the way.
 
 ## Usage
 Install using pip:
@@ -15,15 +14,3 @@ Install using pip:
 Create a file called `train.py`. Define your hyperparameters, model, loss, and optimizer, and Dew(ey) it up real good!
 
 For an example, put the `train.py` file in this repo's `examples` folder in your current directory, and run the command `dwy`.
-
-## Todos:
-* RNG seed handling for train.py and for actual training/ reproducibility
-* plugin deps on other plugins (install once)
-* build on above for full plugins for each framework
-* plugin priorities?
-* model naming conventions for checkpoints
-* distributed training
-* better support multi-model workflows
-* test
-* optimize
-* doc
